@@ -18,7 +18,7 @@ state_t state_d, state_q = REMAINDER_0;
 assign divisible_by_5_o = (state_q == REMAINDER_0);
 
 always_comb begin
-    state_d = REMAINDER_0;
+    state_d = REMAINDER_0; // Default state
     if (serial_i) begin
         case (state_q) // 2*num + 1
             REMAINDER_0: state_d = REMAINDER_1;
@@ -26,6 +26,7 @@ always_comb begin
             REMAINDER_2: state_d = REMAINDER_0;
             REMAINDER_3: state_d = REMAINDER_2;
             REMAINDER_4: state_d = REMAINDER_4;
+            default: state_d = REMAINDER_0; // Handle unexpected states
         endcase
     end else begin
         case (state_q) // 2*num + 0
@@ -34,6 +35,7 @@ always_comb begin
             REMAINDER_2: state_d = REMAINDER_4;
             REMAINDER_3: state_d = REMAINDER_1;
             REMAINDER_4: state_d = REMAINDER_3;
+            default: state_d = REMAINDER_0; // Handle unexpected states
         endcase
     end
 end
